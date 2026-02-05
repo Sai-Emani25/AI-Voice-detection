@@ -7,3 +7,4 @@ pydantic
 websockets
 google-generativeai
 python-dotenv
+librosa
