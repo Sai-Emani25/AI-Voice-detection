@@ -1,5 +1,10 @@
 # AI-Generated Voice Detection System
 
+[![CI/CD Pipeline](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/ci-cd.yml)
+[![Deploy to Vercel](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/deploy.yml/badge.svg)](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/deploy.yml)
+[![PR Tests](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/test.yml/badge.svg)](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/test.yml)
+[![Docker Build](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/docker-build.yml/badge.svg)](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/docker-build.yml)
+
 This project is an API-based system designed to detect whether a voice sample is AI-generated or Human-generated using **Google Gemini AI**. It supports multiple languages (Tamil, English, Hindi, Malayalam, Telugu, Kannada) and accepts Base64-encoded MP3 audio inputs.
 
 ## 🚀 Live Demo
@@ -15,15 +20,18 @@ This project is an API-based system designed to detect whether a voice sample is
 - **Input Format**: JSON payload with Base64-encoded audio and language tag.
 - **Output Format**: Structured JSON with classification, confidence score, and explanation.
 - **Extensible Architecture**: Modular design allowing easy integration of trained ML models (PyTorch, TensorFlow, etc.).
+- **Comprehensive CI/CD**: Automated testing, security scanning, and deployment workflows
 
 ## Project Structure
 
 - `main.py`: The entry point for the FastAPI application.
 - `model.py`: Contains the `VoiceClassifier` class that uses **Google Gemini AI** for voice classification.
-- `preprocessing.py`: Handles audio decoding and feature extraction using `librosa`.
-- `requirements.txt`: List of dependencies.
+- `preprocessing.py`: Handles audio decoding and feature extraction.
+- `requirements.txt`: List of dependencies with pinned versions.
 - `test_api.py`: A script to test the API with dummy audio.
 - `api/index.py`: Vercel serverless function entry point.
+- `.github/workflows/`: CI/CD workflows for automated testing and deployment.
+- `scripts/validate-deployment.py`: Deployment validation script.
 
 ## Setup and Run
 

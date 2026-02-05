@@ -101,13 +101,60 @@ Your app will be live at: `https://your-project-name.vercel.app`
 
 ---
 
-## Step 3: Set Up Automatic Deployments (Optional)
+## Step 3: Set Up Automatic Deployments and CI/CD
 
-### Using GitHub Actions
+### GitHub Actions Workflows
 
-The repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) for automatic deployments.
+The repository includes comprehensive GitHub Actions workflows for CI/CD:
 
-**To enable it:**
+#### 1. **CI/CD Pipeline** (`.github/workflows/ci-cd.yml`)
+
+Comprehensive workflow with 6 jobs that runs on every push and PR:
+
+**Jobs:**
+- **Code Quality & Validation**: Linting with flake8, formatting with black, syntax validation
+- **Testing**: Unit tests, API tests, import validation, coverage reports
+- **Security Scan**: Dependency vulnerability checks, secret scanning, environment variable validation
+- **Build Validation**: Application startup verification, health checks, API documentation validation
+- **Deploy to Vercel**: Automatic production deployment on main branch (requires secrets)
+- **Deploy to Railway**: Optional staging deployment on develop branch (requires secrets)
+
+**Secrets Required for Deployment:**
+- `VERCEL_TOKEN`: Your Vercel authentication token
+- `VERCEL_ORG_ID`: Your Vercel organization ID
+- `VERCEL_PROJECT_ID`: Your Vercel project ID
+- `GEMINI_API_KEY`: Your Google Gemini API key (for tests)
+- `RAILWAY_TOKEN`: (Optional) Your Railway authentication token
+
+#### 2. **Pull Request Tests** (`.github/workflows/test.yml`)
+
+Runs on all pull requests to validate:
+- No merge conflicts
+- Requirements.txt is up-to-date with all critical dependencies
+- Code quality standards
+- All imports work correctly
+- Generates PR validation summary
+
+#### 3. **Enhanced Deploy Workflow** (`.github/workflows/deploy.yml`)
+
+Enhanced version of the original deployment workflow with:
+- Pre-deployment validation
+- Environment variable checks
+- Conditional deployment (only if secrets are configured)
+- Deployment status notifications
+- Dependency caching for faster builds
+
+#### 4. **Docker Build** (`.github/workflows/docker-build.yml`)
+
+Optional workflow for Docker-based deployments:
+- Builds Docker images for the application
+- Pushes to GitHub Container Registry
+- Supports deployment to Railway, Render, or any Docker-compatible platform
+- Includes health checks and proper configuration
+
+### Setting Up GitHub Actions
+
+**To enable automatic deployments:**
 
 1. **Get Vercel Tokens**:
    ```bash
@@ -116,7 +163,7 @@ The repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml
    
    # Login and get tokens
    vercel login
-   cd "d:\My stuff\Passion work\Websites I made\AI Voice Detection"
+   cd "your-project-directory"
    vercel link
    ```
 
@@ -132,15 +179,39 @@ The repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml
      - `VERCEL_TOKEN`: Your Vercel token
      - `VERCEL_ORG_ID`: Your organization ID
      - `VERCEL_PROJECT_ID`: Your project ID
+     - `GEMINI_API_KEY`: Your Gemini API key (for testing)
 
 4. **Push changes**:
    ```bash
-   git add .github/workflows/deploy.yml
-   git commit -m "Add GitHub Actions deployment workflow"
+   git add .
+   git commit -m "Enable GitHub Actions workflows"
    git push origin main
    ```
 
-Now, every push to `main` branch will automatically deploy to Vercel! 🚀
+Now, every push to `main` branch will:
+- ✅ Run code quality checks
+- ✅ Execute all tests
+- ✅ Scan for security vulnerabilities
+- ✅ Validate the build
+- ✅ Automatically deploy to Vercel (if secrets are configured)
+
+### Workflow Status
+
+You can check the status of your workflows at:
+- `https://github.com/your-username/AI-Voice-detection/actions`
+
+### Deployment Validation
+
+Run the validation script to check your deployment configuration:
+
+```bash
+python scripts/validate-deployment.py
+```
+
+This will verify:
+- ✓ Environment variables are set correctly
+- ✓ All critical dependencies are installed
+- ✓ Application can start successfully
 
 ---
 
