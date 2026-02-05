@@ -65,7 +65,7 @@ Your code is already pushed to GitHub at: `https://github.com/Sai-Emani25/AI-Voi
    - Get your API key from: [Google AI Studio](https://makersuite.google.com/app/apikey)
 6. **Deploy**: Click "Deploy"
 
-Your app will be live at: `https://your-project-name.vercel.app`
+Your app will be live at: `https://ai-voice-detection.vercel.app`
 
 ---
 
@@ -163,9 +163,9 @@ uvicorn main:app --reload
 
 ### Production Testing
 After deploying to Vercel, test your endpoints:
-- `https://your-app.vercel.app/` - Main UI
-- `https://your-app.vercel.app/docs` - API Documentation
-- `https://your-app.vercel.app/health` - Health Check
+- `https://ai-voice-detection.vercel.app/` - Main UI
+- `https://ai-voice-detection.vercel.app/docs` - API Documentation
+- `https://ai-voice-detection.vercel.app/health` - Health Check
 
 ---
 
@@ -222,7 +222,7 @@ git push heroku main
 ## Repository Links
 
 - **GitHub**: https://github.com/Sai-Emani25/AI-Voice-detection
-- **Vercel** (after deployment): https://your-project.vercel.app
+- **Vercel**: https://ai-voice-detection.vercel.app
 
 ---
 
