@@ -1,5 +1,30 @@
 # Deployment Guide
 
+## Important: Gemini API Setup
+
+This application uses **Google Gemini AI** for voice classification. Before deploying, you need:
+
+1. **Get a Gemini API Key**:
+   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Sign in with your Google account
+   - Click "Create API Key"
+   - Copy your API key
+
+2. **Set up locally** (for testing):
+   - Create a `.env` file in your project root:
+     ```bash
+     cp .env.example .env
+     ```
+   - Edit `.env` and add your API key:
+     ```
+     GEMINI_API_KEY=your_actual_api_key_here
+     ```
+
+3. **For production deployment**:
+   - You'll add this as an environment variable in Vercel (see Step 2 below)
+
+---
+
 ## Deploying to GitHub and Vercel
 
 This guide explains how to deploy your AI Voice Detection system to GitHub and Vercel.
@@ -34,8 +59,10 @@ Your code is already pushed to GitHub at: `https://github.com/Sai-Emani25/AI-Voi
    - Build Command: (leave empty)
    - Output Directory: (leave empty)
    - Install Command: `pip install -r requirements.txt`
-5. **Environment Variables** (if needed):
-   - Add any API keys or secrets required
+5. **Environment Variables** (REQUIRED):
+   - Click "Environment Variables"
+   - Add: `GEMINI_API_KEY` = `your_gemini_api_key_here`
+   - Get your API key from: [Google AI Studio](https://makersuite.google.com/app/apikey)
 6. **Deploy**: Click "Deploy"
 
 Your app will be live at: `https://your-project-name.vercel.app`

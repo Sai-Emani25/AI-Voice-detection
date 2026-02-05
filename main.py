@@ -10,6 +10,11 @@ import sys
 import json
 import base64
 import asyncio
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -18,7 +23,8 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Initialize the classifier (in a real app, you'd load the model path here)
+# Initialize the classifier with Gemini API
+# API key should be set in GEMINI_API_KEY environment variable
 classifier = VoiceClassifier()
 
 class AudioRequest(BaseModel):

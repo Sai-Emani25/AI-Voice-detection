@@ -5,3 +5,5 @@ numpy
 soundfile
 pydantic
 websockets
+google-generativeai
+python-dotenv

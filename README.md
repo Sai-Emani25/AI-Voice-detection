@@ -1,6 +1,6 @@
 # AI-Generated Voice Detection System
 
-This project is an API-based system designed to detect whether a voice sample is AI-generated or Human-generated. It supports multiple languages (Tamil, English, Hindi, Malayalam, Telugu, Kannada) and accepts Base64-encoded MP3 audio inputs.
+This project is an API-based system designed to detect whether a voice sample is AI-generated or Human-generated using **Google Gemini AI**. It supports multiple languages (Tamil, English, Hindi, Malayalam, Telugu, Kannada) and accepts Base64-encoded MP3 audio inputs.
 
 ## 🚀 Live Demo
 
@@ -19,25 +19,44 @@ This project is an API-based system designed to detect whether a voice sample is
 ## Project Structure
 
 - `main.py`: The entry point for the FastAPI application.
-- `model.py`: Contains the `VoiceClassifier` class. Currently implements a simulation logic. **This is where you should load your trained model.**
+- `model.py`: Contains the `VoiceClassifier` class that uses **Google Gemini AI** for voice classification.
 - `preprocessing.py`: Handles audio decoding and feature extraction using `librosa`.
 - `requirements.txt`: List of dependencies.
 - `test_api.py`: A script to test the API with dummy audio.
+- `api/index.py`: Vercel serverless function entry point.
 
 ## Setup and Run
 
-1. **Install Dependencies**:
+1. **Get Gemini API Key**:
+   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Sign in and create an API key
+   - Copy your API key
+
+2. **Install Dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-2. **Run the Server**:
+3. **Set Environment Variable**:
+   ```bash
+   # Windows PowerShell
+   $env:GEMINI_API_KEY="your_api_key_here"
+   
+   # Linux/Mac
+   export GEMINI_API_KEY="your_api_key_here"
+   
+   # Or create a .env file (recommended)
+   cp .env.example .env
+   # Then edit .env and add your API key
+   ```
+
+4. **Run the Server**:
    ```bash
    uvicorn main:app --reload
    ```
    The API will be available at `http://localhost:8000`.
 
-3. **Test the API**:
+5. **Test the API**:
    You can use the provided test script:
    ```bash
    python test_api.py
@@ -49,14 +68,14 @@ This project is an API-based system designed to detect whether a voice sample is
         -d '{"audio_base64": "<BASE64_STRING>", "language": "English"}'
    ```
 
-## Model Integration
+## Gemini AI Integration
 
-To use a real AI detection model:
-1. Train or download a model (e.g., ASVspoof baseline).
-2. Place the model weights file in the project directory.
-3. Update `model.py`:
-   - Uncomment the model loading logic in `__init__`.
-   - Implement the actual inference in `predict`.
+This application uses **Google Gemini AI** for intelligent voice classification:
+
+- **How it works**: Audio features are extracted and analyzed by Gemini AI
+- **Features analyzed**: Spectral centroid, rolloff, zero-crossing rate, MFCC, and more
+- **AI-powered detection**: Gemini identifies patterns consistent with AI-generated or human voices
+- **No local model required**: All inference happens through the Gemini API
 
 ## API Specification
 
