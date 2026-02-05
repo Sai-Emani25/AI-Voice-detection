@@ -36,12 +36,13 @@ jobs:
       - name: Check for merge conflicts
         run: |
           echo "Checking for merge conflict markers..."
-          if grep -r "<<<<<<< HEAD" . --exclude-dir=.git; then
+          if grep -r "^<<<<<<< " . --exclude-dir=.git; then
             echo "❌ Merge conflict markers found"
             exit 1
           fi
-          if grep -r "=======" . --exclude-dir=.git --include="*.py"; then
-            echo "⚠️ Potential merge conflict markers found in Python files"
+          if grep -r "^>>>>>>> " . --exclude-dir=.git; then
+            echo "❌ Merge conflict markers found"
+            exit 1
           fi
           echo "✓ No merge conflicts detected"
 

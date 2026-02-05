@@ -163,7 +163,7 @@ Optional workflow for Docker-based deployments:
    
    # Login and get tokens
    vercel login
-   cd "your-project-directory"
+   cd /path/to/AI-Voice-detection
    vercel link
    ```
 

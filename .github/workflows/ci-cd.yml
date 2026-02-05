@@ -232,9 +232,7 @@ jobs:
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
-        if: env.VERCEL_TOKEN != ''
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        if: secrets.VERCEL_TOKEN != ''
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
@@ -243,9 +241,7 @@ jobs:
           working-directory: ./
 
       - name: Post-deployment health check
-        if: env.VERCEL_TOKEN != ''
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        if: secrets.VERCEL_TOKEN != ''
         run: |
           echo "Deployment completed. Manual health check recommended."
           echo "Check: https://your-project.vercel.app/health"
@@ -260,9 +256,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy to Railway
-        if: env.RAILWAY_TOKEN != ''
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        if: secrets.RAILWAY_TOKEN != ''
         run: |
           echo "Railway deployment would happen here"
           echo "Install Railway CLI and deploy with WebSocket support"
