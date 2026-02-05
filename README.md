@@ -107,6 +107,56 @@ This application uses **Google Gemini AI** for intelligent voice classification:
 }
 ```
 
+## 🚀 Quick Deploy
+
+### Option 1: One-Click Deploy to Vercel (Fastest - 2 Minutes)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Sai-Emani25/AI-Voice-detection&env=GEMINI_API_KEY&envDescription=Get%20your%20Gemini%20API%20key%20from%20Google%20AI%20Studio&envLink=https://makersuite.google.com/app/apikey)
+
+**Steps:**
+1. Click the button above
+2. Sign in to Vercel with GitHub
+3. Add your `GEMINI_API_KEY` (get it from [Google AI Studio](https://makersuite.google.com/app/apikey))
+4. Click "Deploy"
+5. Your app is live in 2 minutes! 🎉
+
+### Option 2: Deploy via Vercel CLI (3 Minutes)
+
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Deploy
+cd AI-Voice-detection
+vercel --prod
+
+# Add environment variable
+vercel env add GEMINI_API_KEY
+```
+
+### Option 3: Automated Deployment Script
+
+```bash
+# Run the deployment script
+./scripts/deploy.sh
+```
+
+### 📖 Detailed Deployment Guides
+
+- **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - Step-by-step deployment guide (5 min read)
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Comprehensive deployment documentation
+- **[DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)** - Deployment verification checklist
+
+### Verify Your Deployment
+
+After deployment, test your app:
+
+```bash
+python scripts/verify-deployment.py https://your-app.vercel.app
+```
+
+---
+
 ## Deployment
 
 ### Deploy to Vercel (Recommended)
@@ -115,6 +165,7 @@ This application uses **Google Gemini AI** for intelligent voice classification:
 2. **Deploy to Vercel**:
    - Visit [vercel.com](https://vercel.com)
    - Import your GitHub repository
+   - Add `GEMINI_API_KEY` environment variable
    - Click "Deploy"
 
 For detailed deployment instructions including GitHub Actions automation, see **[DEPLOYMENT.md](DEPLOYMENT.md)**.

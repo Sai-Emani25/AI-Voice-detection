@@ -8,3 +8,13 @@ env/
 *.swp
 *.log
 .DS_Store
+
+# Vercel
+.vercel
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
