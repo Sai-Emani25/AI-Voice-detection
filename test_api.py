@@ -12,15 +12,9 @@ def create_dummy_audio_base64():
     # 440Hz sine wave
     audio = 0.5 * np.sin(2 * np.pi * 440 * t)
     
-    # Save to memory buffer as MP3 (or WAV if MP3 encoder missing, but prompt said MP3)
-    # librosa/soundfile usually save as WAV by default or need ffmpeg for MP3.
-    # To be safe and simple, let's try WAV first, but encode as base64. 
-    # The API just uses librosa.load which handles many formats.
-    # If the prompt strictly requires MP3 input, we should try to send MP3. 
-    # However, creating MP3 programmatically requires ffmpeg/lame installed.
-    # For this test, I will send WAV and see if it works (librosa detects format).
-    # If the API *enforces* MP3, I'd need to mock that check. 
-    # My code `decode_audio` uses `librosa.load` which is format-agnostic usually.
+    # Save to memory buffer as WAV
+    # soundfile is used for encoding/decoding audio
+    # The API uses soundfile which handles many formats
     
     buffer = io.BytesIO()
     sf.write(buffer, audio, sr, format='WAV')

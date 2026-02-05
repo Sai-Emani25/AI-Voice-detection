@@ -20,7 +20,7 @@ This project is an API-based system designed to detect whether a voice sample is
 
 - `main.py`: The entry point for the FastAPI application.
 - `model.py`: Contains the `VoiceClassifier` class. Currently implements a simulation logic. **This is where you should load your trained model.**
-- `preprocessing.py`: Handles audio decoding and feature extraction using `librosa`.
+- `preprocessing.py`: Handles audio decoding and feature extraction using `soundfile` and `numpy`.
 - `requirements.txt`: List of dependencies.
 - `test_api.py`: A script to test the API with dummy audio.
 
