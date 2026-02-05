@@ -51,7 +51,6 @@ async def root(request: Request, format: str | None = None):
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-<<<<<<< HEAD
       <title>AI Voice Detection - Advanced Audio Analysis</title>
       <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -573,58 +572,6 @@ async def root(request: Request, format: str | None = None):
         });
         
         // File upload functionality
-=======
-      <title>AI Voice Detection</title>
-      <style>
-        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 2rem; }
-        .card { max-width: 800px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        h1 { font-size: 1.6rem; margin-bottom: 1rem; }
-        label { display: block; margin: .5rem 0 .25rem; font-weight: 600; }
-        input[type=file], select, textarea { width: 100%; padding: .5rem; border: 1px solid #ccc; border-radius: 6px; }
-        button { margin-top: 1rem; padding: .6rem 1rem; border: none; border-radius: 6px; background: #2563eb; color: #fff; cursor: pointer; }
-        button:disabled { background: #9aa7c7; cursor: not-allowed; }
-        pre { background: #0f172a; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow: auto; }
-        .row { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-        @media (min-width: 640px) { .row { grid-template-columns: 1fr 1fr; } }
-        .small { font-size: .85rem; color: #555; }
-        .links a { margin-right: .75rem; }
-      </style>
-    </head>
-    <body>
-      <div class="card">
-        <h1>AI-Generated Voice Detection</h1>
-        <div class="links">
-          <a href="/docs">API Docs</a>
-          <a href="/health" target="_blank">Health JSON</a>
-          <a href="/?format=json" target="_blank">Root JSON</a>
-        </div>
-        <p class="small">Upload audio and select language. The API returns classification, confidence, and explanation.</p>
-        <div class="row">
-          <div>
-            <label for="file">Audio file (WAV/MP3)</label>
-            <input id="file" type="file" accept=".wav,.mp3,audio/*">
-          </div>
-          <div>
-            <label for="lang">Language</label>
-            <select id="lang">
-              <option>English</option>
-              <option>Tamil</option>
-              <option>Hindi</option>
-              <option>Malayalam</option>
-              <option>Telugu</option>
-              <option>Kannada</option>
-            </select>
-          </div>
-        </div>
-        <button id="send">Detect</button>
-        <div id="out" style="margin-top:1rem;">
-          <pre id="result">{ "status": "waiting for input" }</pre>
-        </div>
-        <p class="small">Or paste Base64 audio below (optional):</p>
-        <textarea id="base64" rows="4" placeholder="Base64 audio string"></textarea>
-      </div>
-      <script>
->>>>>>> 72eee4ab216b8d7567659bc8a18fe88544647020
         async function toBase64(file) {
           return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -633,7 +580,6 @@ async def root(request: Request, format: str | None = None):
             reader.readAsDataURL(file);
           });
         }
-<<<<<<< HEAD
         
         async function detect() {
           const btn = document.getElementById('send');
@@ -653,26 +599,11 @@ async def root(request: Request, format: str | None = None):
               audioB64 = await toBase64(f);
             }
             
-=======
-        async function detect() {
-          const btn = document.getElementById('send');
-          btn.disabled = true;
-          const fileInput = document.getElementById('file');
-          const lang = document.getElementById('lang').value;
-          let audioB64 = document.getElementById('base64').value.trim();
-          try {
-            if (!audioB64) {
-              const f = fileInput.files[0];
-              if (!f) throw new Error('Select a file or paste Base64 audio');
-              audioB64 = await toBase64(f);
-            }
->>>>>>> 72eee4ab216b8d7567659bc8a18fe88544647020
             const res = await fetch('/detect', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ audio_base64: audioB64, language: lang })
             });
-<<<<<<< HEAD
             
             const data = await res.json();
             const formatted = JSON.stringify(data, null, 2);
@@ -690,17 +621,10 @@ async def root(request: Request, format: str | None = None):
               timestamp: new Date().toISOString()
             }, null, 2);
             resultPre.className = '';
-=======
-            const txt = await res.text();
-            document.getElementById('result').textContent = txt;
-          } catch (err) {
-            document.getElementById('result').textContent = JSON.stringify({ error: String(err) }, null, 2);
->>>>>>> 72eee4ab216b8d7567659bc8a18fe88544647020
           } finally {
             btn.disabled = false;
           }
         }
-<<<<<<< HEAD
         
         document.getElementById('send').addEventListener('click', detect);
         document.getElementById('file').addEventListener('change', (e) => {
@@ -915,9 +839,6 @@ async def root(request: Request, format: str | None = None):
         
         document.getElementById('start-monitor').addEventListener('click', startLiveMonitoring);
         document.getElementById('stop-monitor').addEventListener('click', stopLiveMonitoring);
-=======
-        document.getElementById('send').addEventListener('click', detect);
->>>>>>> 72eee4ab216b8d7567659bc8a18fe88544647020
       </script>
     </body>
     </html>
@@ -1053,10 +974,7 @@ def service_worker():
       event.respondWith(fetch(event.request));
     });
     """
-<<<<<<< HEAD
 
-=======
->>>>>>> 72eee4ab216b8d7567659bc8a18fe88544647020
 @app.post("/detect", response_model=AudioResponse)
 async def detect_voice(request: AudioRequest):
     """
