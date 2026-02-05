@@ -1,5 +1,10 @@
 # AI-Generated Voice Detection System
 
+[![CI/CD Pipeline](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/ci-cd.yml)
+[![Deploy to Vercel](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/deploy.yml/badge.svg)](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/deploy.yml)
+[![PR Tests](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/test.yml/badge.svg)](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/test.yml)
+[![Docker Build](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/docker-build.yml/badge.svg)](https://github.com/Sai-Emani25/AI-Voice-detection/actions/workflows/docker-build.yml)
+
 This project is an API-based system designed to detect whether a voice sample is AI-generated or Human-generated using **Google Gemini AI**. It supports multiple languages (Tamil, English, Hindi, Malayalam, Telugu, Kannada) and accepts Base64-encoded MP3 audio inputs.
 
 ## 🚀 Live Demo
@@ -15,15 +20,18 @@ This project is an API-based system designed to detect whether a voice sample is
 - **Input Format**: JSON payload with Base64-encoded audio and language tag.
 - **Output Format**: Structured JSON with classification, confidence score, and explanation.
 - **Extensible Architecture**: Modular design allowing easy integration of trained ML models (PyTorch, TensorFlow, etc.).
+- **Comprehensive CI/CD**: Automated testing, security scanning, and deployment workflows
 
 ## Project Structure
 
 - `main.py`: The entry point for the FastAPI application.
 - `model.py`: Contains the `VoiceClassifier` class that uses **Google Gemini AI** for voice classification.
-- `preprocessing.py`: Handles audio decoding and feature extraction using `librosa`.
-- `requirements.txt`: List of dependencies.
+- `preprocessing.py`: Handles audio decoding and feature extraction.
+- `requirements.txt`: List of dependencies with pinned versions.
 - `test_api.py`: A script to test the API with dummy audio.
 - `api/index.py`: Vercel serverless function entry point.
+- `.github/workflows/`: CI/CD workflows for automated testing and deployment.
+- `scripts/validate-deployment.py`: Deployment validation script.
 
 ## Setup and Run
 
@@ -99,6 +107,56 @@ This application uses **Google Gemini AI** for intelligent voice classification:
 }
 ```
 
+## 🚀 Quick Deploy
+
+### Option 1: One-Click Deploy to Vercel (Fastest - 2 Minutes)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Sai-Emani25/AI-Voice-detection&env=GEMINI_API_KEY&envDescription=Get%20your%20Gemini%20API%20key%20from%20Google%20AI%20Studio&envLink=https://makersuite.google.com/app/apikey)
+
+**Steps:**
+1. Click the button above
+2. Sign in to Vercel with GitHub
+3. Add your `GEMINI_API_KEY` (get it from [Google AI Studio](https://makersuite.google.com/app/apikey))
+4. Click "Deploy"
+5. Your app is live in 2 minutes! 🎉
+
+### Option 2: Deploy via Vercel CLI (3 Minutes)
+
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Deploy
+cd AI-Voice-detection
+vercel --prod
+
+# Add environment variable
+vercel env add GEMINI_API_KEY
+```
+
+### Option 3: Automated Deployment Script
+
+```bash
+# Run the deployment script
+./scripts/deploy.sh
+```
+
+### 📖 Detailed Deployment Guides
+
+- **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - Step-by-step deployment guide (5 min read)
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Comprehensive deployment documentation
+- **[DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)** - Deployment verification checklist
+
+### Verify Your Deployment
+
+After deployment, test your app:
+
+```bash
+python scripts/verify-deployment.py https://your-app.vercel.app
+```
+
+---
+
 ## Deployment
 
 ### Deploy to Vercel (Recommended)
@@ -107,6 +165,7 @@ This application uses **Google Gemini AI** for intelligent voice classification:
 2. **Deploy to Vercel**:
    - Visit [vercel.com](https://vercel.com)
    - Import your GitHub repository
+   - Add `GEMINI_API_KEY` environment variable
    - Click "Deploy"
 
 For detailed deployment instructions including GitHub Actions automation, see **[DEPLOYMENT.md](DEPLOYMENT.md)**.

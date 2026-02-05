@@ -14,24 +14,55 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
       
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       
+      - name: Pre-deployment validation
+        run: |
+          echo "Validating application before deployment..."
+          python -c "from main import app; print('✓ Application imports successfully')"
+          
+      - name: Check environment variable configuration
+        run: |
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "⚠️ VERCEL_TOKEN not configured, skipping deployment"
+            exit 0
+          fi
+          if [ -z "${{ secrets.VERCEL_ORG_ID }}" ]; then
+            echo "⚠️ VERCEL_ORG_ID not configured, skipping deployment"
+            exit 0
+          fi
+          if [ -z "${{ secrets.VERCEL_PROJECT_ID }}" ]; then
+            echo "⚠️ VERCEL_PROJECT_ID not configured, skipping deployment"
+            exit 0
+          fi
+          echo "✓ All Vercel secrets configured"
+
       - name: Run tests (if any)
         run: |
           echo "Running tests..."
-          # python -m pytest tests/ (uncomment when tests are added)
+          # Test basic imports
+          python -c "import fastapi; import uvicorn; import librosa; print('✓ All critical imports successful')"
       
       - name: Deploy to Vercel
+        if: github.event_name == 'push' && secrets.VERCEL_TOKEN != ''
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -39,3 +70,18 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
           working-directory: ./
+
+      - name: Deployment status notification
+        if: github.event_name == 'push'
+        run: |
+          if [ -n "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "✅ Deployment completed successfully"
+            echo "🔗 Check your deployment at: https://vercel.com/dashboard"
+          else
+            echo "ℹ️ Deployment skipped - Vercel secrets not configured"
+            echo "To enable automatic deployment, add the following secrets to your repository:"
+            echo "  - VERCEL_TOKEN"
+            echo "  - VERCEL_ORG_ID"
+            echo "  - VERCEL_PROJECT_ID"
+          fi
+
