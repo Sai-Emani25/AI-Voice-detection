@@ -17,13 +17,17 @@ class VoiceClassifier:
                 "Gemini API key is required. Set GEMINI_API_KEY environment variable or pass api_key parameter."
             )
         
-        # Configure Gemini
-        genai.configure(api_key=self.api_key)
-        # Using gemini-1.5-flash for cost-effective text generation
-        # If this model is not available, try: gemini-1.5-pro, gemini-pro, or check available models
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        # Configure Gemini with custom endpoint
+        genai.configure(
+            api_key=self.api_key,
+            transport='rest',
+            client_options={'api_endpoint': 'https://generativelanguage.googleapis.com'}
+        )
+        # Using gemini-2.5-flash for cost-effective text generation
+        # Available models: gemini-2.5-flash, gemini-2.5-pro, gemini-flash-latest
+        self.model = genai.GenerativeModel('gemini-2.5-flash')
         self.is_loaded = True
-        print("Gemini API initialized successfully.")
+        print("Gemini API initialized successfully with endpoint: https://generativelanguage.googleapis.com")
 
     def predict(self, features: dict):
         """
