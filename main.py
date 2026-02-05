@@ -1,17 +1,13 @@
-from fastapi import FastAPI, HTTPException, Body, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Request
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
-from fastapi import Request
 from pydantic import BaseModel, Field
 from typing import Optional
 from preprocessing import decode_audio, extract_features
 from model import VoiceClassifier
-import uvicorn
-import sys
-import json
-import base64
-import asyncio
-import os
 from dotenv import load_dotenv
+import uvicorn
+import json
+import asyncio
 
 # Load environment variables from .env file
 load_dotenv()

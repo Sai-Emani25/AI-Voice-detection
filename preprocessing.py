@@ -47,18 +47,20 @@ def decode_audio(base64_string: str):
 
 def extract_features(y, sr):
     """
-    Extracts features from the audio signal.
-    For a real model, this would match the training preprocessing (e.g., Mel-spectrogram).
-    Here we extract some basic features for demonstration/heuristic use.
+    Extracts features from the audio signal for AI voice detection.
+    Returns features that are analyzed by Gemini AI.
     """
     # Basic feature set implemented using numpy
     y = np.asarray(y, dtype=np.float32)
     duration = float(len(y) / sr) if sr else 0.0
+    
     # RMS energy
-    rms = float(np.sqrt(np.mean(y ** 2))) if y.size else 0.0
+    rms_mean = float(np.sqrt(np.mean(y ** 2))) if y.size else 0.0
+    
     # Zero crossing rate
-    zcr = float(np.mean(np.abs(np.diff(np.sign(y)))) / 2.0) if y.size else 0.0
-    # Spectral centroid (simple magnitude spectrum centroid)
+    zero_crossing_rate_mean = float(np.mean(np.abs(np.diff(np.sign(y)))) / 2.0) if y.size else 0.0
+    
+    # Spectral features
     if y.size:
         # Use a window to avoid edge artifacts
         win = min(len(y), 2048)
@@ -67,15 +69,26 @@ def extract_features(y, sr):
         segment = segment * window
         spectrum = np.abs(np.fft.rfft(segment))
         freqs = np.fft.rfftfreq(win, d=1.0 / sr) if sr else np.arange(len(spectrum))
+        
+        # Spectral centroid
         if spectrum.sum() > 0:
-            centroid = float((freqs * spectrum).sum() / spectrum.sum())
+            spectral_centroid_mean = float((freqs * spectrum).sum() / spectrum.sum())
         else:
-            centroid = 0.0
+            spectral_centroid_mean = 0.0
+        
+        # Spectral rolloff (frequency below which 85% of energy is contained)
+        cumsum = np.cumsum(spectrum)
+        rolloff_threshold = 0.85 * cumsum[-1]
+        rolloff_idx = np.where(cumsum >= rolloff_threshold)[0]
+        spectral_rolloff_mean = float(freqs[rolloff_idx[0]]) if len(rolloff_idx) > 0 else 0.0
     else:
-        centroid = 0.0
+        spectral_centroid_mean = 0.0
+        spectral_rolloff_mean = 0.0
+    
     return {
-        "rms": rms,
-        "zero_crossing_rate": zcr,
-        "spectral_centroid_mean": centroid,
+        "rms_mean": rms_mean,
+        "zero_crossing_rate_mean": zero_crossing_rate_mean,
+        "spectral_centroid_mean": spectral_centroid_mean,
+        "spectral_rolloff_mean": spectral_rolloff_mean,
         "duration": duration
     }

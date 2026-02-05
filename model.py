@@ -19,7 +19,9 @@ class VoiceClassifier:
         
         # Configure Gemini
         genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel('gemini-pro')
+        # Using gemini-1.5-flash for cost-effective text generation
+        # If this model is not available, try: gemini-1.5-pro, gemini-pro, or check available models
+        self.model = genai.GenerativeModel('gemini-1.5-flash')
         self.is_loaded = True
         print("Gemini API initialized successfully.")
 

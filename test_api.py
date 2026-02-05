@@ -6,22 +6,15 @@ import io
 import json
 
 def create_dummy_audio_base64():
-    # Generate 1 second of silence (or a sine wave)
+    """
+    Generate a test audio file (1 second sine wave at 440Hz) encoded as base64.
+    """
     sr = 22050
     t = np.linspace(0, 1, sr)
     # 440Hz sine wave
     audio = 0.5 * np.sin(2 * np.pi * 440 * t)
     
-    # Save to memory buffer as MP3 (or WAV if MP3 encoder missing, but prompt said MP3)
-    # librosa/soundfile usually save as WAV by default or need ffmpeg for MP3.
-    # To be safe and simple, let's try WAV first, but encode as base64. 
-    # The API just uses librosa.load which handles many formats.
-    # If the prompt strictly requires MP3 input, we should try to send MP3. 
-    # However, creating MP3 programmatically requires ffmpeg/lame installed.
-    # For this test, I will send WAV and see if it works (librosa detects format).
-    # If the API *enforces* MP3, I'd need to mock that check. 
-    # My code `decode_audio` uses `librosa.load` which is format-agnostic usually.
-    
+    # Save to memory buffer as WAV format
     buffer = io.BytesIO()
     sf.write(buffer, audio, sr, format='WAV')
     buffer.seek(0)
@@ -30,7 +23,7 @@ def create_dummy_audio_base64():
     audio_b64 = base64.b64encode(buffer.read()).decode('utf-8')
     return audio_b64
 
-def test_detection(language="English", port=8001, timeout=60):
+def test_detection(language="English", port=8000, timeout=60):
     url = f"http://localhost:{port}/detect"
     
     print("Generating dummy audio...")
