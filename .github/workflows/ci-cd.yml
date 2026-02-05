@@ -10,6 +10,8 @@ jobs:
   code-quality:
     name: Code Quality & Validation
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -54,6 +56,8 @@ jobs:
   testing:
     name: Testing
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -107,6 +111,8 @@ jobs:
   security:
     name: Security Scan
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -143,6 +149,8 @@ jobs:
   build-validation:
     name: Build Validation
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -211,6 +219,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [code-quality, testing, security, build-validation]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -251,6 +261,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [code-quality, testing, security, build-validation]
     if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
