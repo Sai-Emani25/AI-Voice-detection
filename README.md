@@ -2,9 +2,16 @@
 
 This project is an API-based system designed to detect whether a voice sample is AI-generated or Human-generated. It supports multiple languages (Tamil, English, Hindi, Malayalam, Telugu, Kannada) and accepts Base64-encoded MP3 audio inputs.
 
+## 🚀 Live Demo
+
+- **GitHub Repository**: https://github.com/Sai-Emani25/AI-Voice-detection
+- **Deployment Guide**: See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions
+
 ## Features
 
 - **API Endpoint**: RESTful API built with FastAPI.
+- **Live Audio Monitoring**: Real-time voice detection using WebSocket
+- **Interactive UI**: Modern web interface with file upload and live monitoring
 - **Input Format**: JSON payload with Base64-encoded audio and language tag.
 - **Output Format**: Structured JSON with classification, confidence score, and explanation.
 - **Extensible Architecture**: Modular design allowing easy integration of trained ML models (PyTorch, TensorFlow, etc.).
@@ -72,3 +79,32 @@ To use a real AI detection model:
   "metadata": { ... }
 }
 ```
+
+## Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. **Push to GitHub** (already done ✅)
+2. **Deploy to Vercel**:
+   - Visit [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Click "Deploy"
+
+For detailed deployment instructions including GitHub Actions automation, see **[DEPLOYMENT.md](DEPLOYMENT.md)**.
+
+### Other Platforms
+
+The application can also be deployed to:
+- **Railway**: Full WebSocket support
+- **Render**: Easy Python app deployment
+- **Heroku**: Traditional PaaS deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for platform-specific instructions.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT License
